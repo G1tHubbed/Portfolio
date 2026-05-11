@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carlos Valdez — Operations & Tech Portfolio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: #050505; color: #e5e5e5; overflow-x: hidden; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #050505; }
+  ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 3px; }
+
+  /* ── ANGLE SLIDE SECTIONS ── */
+  .angled-section {
+    transform: skewY(-3deg);
+  }
+  .angled-section > * {
+    transform: skewY(3deg);
+  }
+
+  /* ── MARQUEE BANNERS ── */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 30s linear infinite;
+  }
+  .marquee-track.reverse {
+    animation: marquee-scroll-reverse 35s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes marquee-scroll {
+    0% { transform: translateX(0) rotate(-2deg); }
+    100% { transform: translateX(-50%) rotate(-2deg); }
+  }
+  @keyframes marquee-scroll-reverse {
+    0% { transform: translateX(-50%) rotate(2deg); }
+    100% { transform: translateX(0) rotate(2deg); }
+  }
+
+  /* ── FUN HOVER BUTTONS ── */
+  .btn-slide {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow: hidden;
+    border: none;
+    text-decoration: none;
+  }
+  .btn-slide.primary {
+    background: linear-gradient(to right, #1d4ed8, #2563eb);
+    color: #fff;
+    box-shadow: 0 0 30px rgba(29,78,216,0.4);
+  }
+  .btn-slide.primary:hover {
+    transform: translateX(10px) translateY(-3px) rotate(-1deg);
+    box-shadow: 0 0 50px rgba(29,78,216,0.6), 0 10px 30px rgba(29,78,216,0.3);
+  }
+  .btn-slide.outline {
+    background: transparent;
+    color: #e5e5e5;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-slide.outline:hover {
+    transform: translateX(-10px) translateY(-3px) rotate(1deg);
+    border-color: #3b82f6;
+    color: #60a5fa;
+    box-shadow: 0 0 30px rgba(59,130,246,0.2);
+  }
+  .btn-slide.fun {
+    background: linear-gradient(135deg, #7c3aed, #3b82f6);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(124,58,237,0.3);
+  }
+  .btn-slide.fun:hover {
+    transform: translateY(-6px) scale(1.05) rotate(2deg);
+    box-shadow: 0 0 50px rgba(124,58,237,0.5), 0 15px 30px rgba(0,0,0,0.4);
+  }
+  .btn-slide .arrow {
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .btn-slide:hover .arrow {
+    transform: translateX(6px);
+  }
+
+  /* ── FLOATING BADGE ── */
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(3deg); }
+  }
+  .float-badge {
+    animation: float 4s ease-in-out infinite;
+  }
+  .float-badge:nth-child(2) { animation-delay: 0.5s; }
+  .float-badge:nth-child(3) { animation-delay: 1s; }
+  .float-badge:nth-child(4) { animation-delay: 1.5s; }
+
+  /* ── WOBBLE ── */
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-1deg); }
+    50% { transform: rotate(1deg); }
+  }
+  .wobble { animation: wobble 3s ease-in-out infinite; }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .reveal.from-left {
+    transform: translateX(-80px) rotate(-2deg);
+  }
+  .reveal.from-right {
+    transform: translateX(80px) rotate(2deg);
+  }
+  .reveal.from-bottom {
+    transform: translateY(60px) rotate(-1deg);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+
+  /* ── PULSE RING ── */
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  .pulse-ring::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid #3b82f6;
+    animation: pulse-ring 2s ease-out infinite;
+  }
+
+  /* ── EXPERIENCE CARD ── */
+  .exp-card {
+    background: rgba(23,23,23,0.5);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px;
+    padding: 32px;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(59,130,246,0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .exp-card:hover {
+    transform: translateY(-8px) rotate(-0.5deg);
+    border-color: rgba(59,130,246,0.3);
+    box-shadow: 0 0 60px rgba(59,130,246,0.12);
+  }
+  .exp-card:hover::before { opacity: 1; }
+
+  /* ── SKILL PILL ── */
+  .skill-pill {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.15);
+    color: #93c5fd;
+    transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+    cursor: default;
+  }
+  .skill-pill:hover {
+    background: rgba(59,130,246,0.2);
+    transform: translateY(-4px) rotate(-2deg) scale(1.08);
+    box-shadow: 0 6px 20px rgba(59,130,246,0.2);
+  }
+
+  /* ── CERT CARD ── */
+  .cert-card {
+    background: rgba(23,23,23,0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 24px;
+    transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+  }
+  .cert-card:hover {
+    transform: translateX(8px) rotate(1deg);
+    border-color: rgba(59,130,246,0.25);
+    box-shadow: 0 0 30px rgba(59,130,246,0.08);
+  }
+
+  /* ── HERO PARTICLE ── */
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+    25% { transform: translate(30px, -40px) rotate(90deg); opacity: 0.6; }
+    50% { transform: translate(-20px, -80px) rotate(180deg); opacity: 0.3; }
+    75% { transform: translate(40px, -30px) rotate(270deg); opacity: 0.5; }
+  }
+  .particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: #3b82f6;
+    border-radius: 50%;
+    animation: drift 6s ease-in-out infinite;
+  }
+
+  /* ── NAV ── */
+  nav a {
+    position: relative;
+    transition: color 0.3s;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: #3b82f6;
+    transition: width 0.3s;
+    border-radius: 1px;
+  }
+  nav a:hover { color: #60a5fa; }
+  nav a:hover::after { width: 100%; }
+
+  /* ── DIAGONAL DIVIDER ── */
+  .diagonal-divider {
+    position: relative;
+  }
+  .diagonal-divider::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 0;
+    width: 100%; height: 80px;
+    background: inherit;
+    transform: skewY(-3deg);
+    z-index: 1;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    background: #1d4ed8;
+    color: #fff;
+    padding: 16px 28px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 9999;
+    transform: translateX(120%) rotate(5deg);
+    transition: all 0.5s cubic-bezier(0.23,1,0.32,1);
+    box-shadow: 0 10px 30px rgba(29,78,216,0.4);
+  }
+  .toast.show {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  /* ── ANGLE SECTION REVEAL ── */
+  .angle-reveal {
+    opacity: 0;
+    transform: translateX(-100px) skewY(-3deg);
+    transition: all 1s cubic-bezier(0.23,1,0.32,1);
+  }
+  .angle-reveal.from-right-side {
+    transform: translateX(100px) skewY(3deg);
+  }
+  .angle-reveal.visible {
+    opacity: 1;
+    transform: translateX(0) skewY(0deg);
+  }
+
+  /* ── STAT COUNTER ── */
+  .stat-box {
+    text-align: center;
+    padding: 32px;
+    background: rgba(23,23,23,0.4);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 24px;
+    transition: all 0.4s;
+  }
+  .stat-box:hover {
+    transform: translateY(-8px) rotate(2deg);
+    border-color: rgba(59,130,246,0.3);
+    box-shadow: 0 0 40px rgba(59,130,246,0.1);
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ TOAST ════════ -->
+<div id="toast" class="toast">Message sent! 🚀</div>
+
+<!-- ════════ NAV ════════ -->
+<header class="fixed top-0 w-full z-50" style="backdrop-filter:blur(20px); background:rgba(5,5,5,0.7); border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#hero" class="text-xl font-bold tracking-tight" style="background:linear-gradient(to right,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">CV</a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-neutral-400">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#certs">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button id="mobile-menu-btn" class="md:hidden text-neutral-300">
+      <i data-lucide="menu" class="w-6 h-6"></i>
+    </button>
+  </div>
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+    <nav class="flex flex-col gap-4 text-sm text-neutral-400">
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#experience" class="mobile-link">Experience</a>
+      <a href="#skills" class="mobile-link">Skills</a>
+      <a href="#certs" class="mobile-link">Certifications</a>
+      <a href="#contact" class="mobile-link">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ════════ HERO ════════ -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- BG Image -->
+  <div class="absolute inset-0">
+    <img src="https://picsum.photos/seed/carlos-ops-hero/1920/1080.jpg" alt="" class="w-full h-full object-cover opacity-20" style="filter:grayscale(80%) contrast(1.2);">
+    <div class="absolute inset-0" style="background:linear-gradient(to right,#050505,rgba(5,5,5,0.9),rgba(5,5,5,0.7));"></div>
+    <div class="absolute inset-0" style="background:linear-gradient(to top,#050505,transparent,transparent);"></div>
+  </div>
+
+  <!-- Particles -->
+  <div class="particle" style="top:20%;left:10%;animation-delay:0s;"></div>
+  <div class="particle" style="top:60%;left:80%;animation-delay:1.5s;"></div>
+  <div class="particle" style="top:30%;left:50%;animation-delay:3s;"></div>
+  <div class="particle" style="top:70%;left:30%;animation-delay:0.8s;"></div>
+  <div class="particle" style="top:40%;left:70%;animation-delay:2.2s;"></div>
+  <div class="particle" style="top:80%;left:15%;animation-delay:4s;"></div>
+
+  <!-- Glow -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full" style="background:rgba(29,78,216,0.08);filter:blur(120px);"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+    <!-- Floating badges -->
+    <div class="flex justify-center gap-4 mb-8 flex-wrap">
+      <span class="float-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider" style="background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#60a5fa;">
+        <i data-lucide="trophy" class="w-3.5 h-3.5"></i> 2025 Employee of the Year
+      </span>
+      <span class="float-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider" style="background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);color:#c084fc;">
+        <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> 730%+ Efficiency Gain
+      </span>
+      <span class="float-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider" style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#4ade80;">
+        <i data-lucide="code-2" class="w-3.5 h-3.5"></i> Full-Stack Builder
+      </span>
+    </div>
+
+    <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-none mb-6">
+      Carlos<br>
+      <span style="background:linear-gradient(135deg,#3b82f6,#8b5cf6,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:gradient-shift 4s ease infinite;">Valdez</span>
+    </h1>
+    <style>
+      @keyframes gradient-shift {
+        0%,100%{background-position:0% 50%}
+        50%{background-position:100% 50%}
+      }
+    </style>
+
+    <p class="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+      Operations-focused professional turned full-stack developer. I engineer systems that don't just work — they <em class="not-italic text-blue-400">transform</em> workflows.
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="#experience" class="btn-slide primary">
+        See My Impact <span class="arrow">→</span>
+      </a>
+      <a href="#contact" class="btn-slide outline">
+        ← Let's Talk
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-500 text-xs">
+    <span>Scroll</span>
+    <div class="w-5 h-8 border border-neutral-600 rounded-full flex justify-center pt-1.5">
+      <div class="w-1 h-2 bg-blue-500 rounded-full" style="animation:float 2s ease-in-out infinite;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ MARQUEE BANNER 1 ════════ -->
+<div class="relative overflow-hidden" style="padding:48px 0;background:linear-gradient(135deg,rgba(29,78,216,0.12),rgba(124,58,237,0.08));">
+  <div class="marquee-track" style="margin:0 -40px;">
+    <span class="flex items-center gap-8 px-4 text-sm font-semibold uppercase tracking-widest text-blue-400/70 whitespace-nowrap">
+      <span>⚙️ Lean Six Sigma</span><span>•</span>
+      <span>🔧 Process Optimization</span><span>•</span>
+      <span>💻 React & Node.js</span><span>•</span>
+      <span>📊 Data-Driven Decisions</span><span>•</span>
+      <span>🏗️ Warehouse Management</span><span>•</span>
+      <span>🐍 Python</span><span>•</span>
+      <span>🗄️ SQL & PostgreSQL</span><span>•</span>
+      <span>📈 730%+ Efficiency Gain</span><span>•</span>
+      <span>🏆 Employee of the Year</span><span>•</span>
+      <span>🤖 AI-Assisted Development</span><span>•</span>
+    </span>
+    <span class="flex items-center gap-8 px-4 text-sm font-semibold uppercase tracking-widest text-blue-400/70 whitespace-nowrap">
+      <span>⚙️ Lean Six Sigma</span><span>•</span>
+      <span>🔧 Process Optimization</span><span>•</span>
+      <span>💻 React & Node.js</span><span>•</span>
+      <span>📊 Data-Driven Decisions</span><span>•</span>
+      <span>🏗️ Warehouse Management</span><span>•</span>
+      <span>🐍 Python</span><span>•</span>
+      <span>🗄️ SQL & PostgreSQL</span><span>•</span>
+      <span>📈 730%+ Efficiency Gain</span><span>•</span>
+      <span>🏆 Employee of the Year</span><span>•</span>
+      <span>🤖 AI-Assisted Development</span><span>•</span>
+    </span>
+  </div>
+</div>
+
+<!-- ════════ ABOUT / STATS ════════ -->
+<section id="about" class="relative py-28 md:py-36">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="reveal from-left mb-16">
+      <span class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4 block">About Me</span>
+      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight mb-6">Operations brain.<br><span class="text-neutral-500">Developer hands.</span></h2>
+      <p class="text-neutral-400 text-lg max-w-2xl leading-relaxed">
+        8+ years in warehouse management and inventory systems. I've reduced search times from 60+ minutes to under 5, eliminated 99%+ of stockouts, and built custom inventory systems from scratch. Now I'm combining that operational expertise with full-stack development — currently pursuing CCNA and CCNA CyberOps certifications.
+      </p>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <div class="stat-box reveal from-bottom" style="transition-delay:0.1s;">
+        <div class="text-3xl md:text-4xl font-bold text-blue-400 mb-2" data-count="730">0</div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-neutral-500">%+ Efficiency Gain</div>
+      </div>
+      <div class="stat-box reveal from-bottom" style="transition-delay:0.2s;">
+        <div class="text-3xl md:text-4xl font-bold text-purple-400 mb-2" data-count="8">0</div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-neutral-500">+ Years Experience</div>
+      </div>
+      <div class="stat-box reveal from-bottom" style="transition-delay:0.3s;">
+        <div class="text-3xl md:text-4xl font-bold text-green-400 mb-2" data-count="5">0</div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-neutral-500">Award Recognitions</div>
+      </div>
+      <div class="stat-box reveal from-bottom" style="transition-delay:0.4s;">
+        <div class="text-3xl md:text-4xl font-bold text-amber-400 mb-2" data-count="99">0</div>
+        <div class="text-xs font-semibold uppercase tracking-wider text-neutral-500">%+ Stockout Reduction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ EXPERIENCE ════════ -->
+<section id="experience" class="relative py-28 md:py-36" style="background:linear-gradient(180deg,rgba(23,23,23,0.3),#050505);">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="reveal from-right mb-16 text-right">
+      <span class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4 block">Work Experience</span>
+      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">Where I've<br><span class="text-neutral-500">made impact.</span></h2>
+    </div>
+
+    <div class="space-y-8">
+      <!-- Job 1 -->
+      <div class="exp-card reveal from-left" style="transition-delay:0.1s;">
+        <div class="relative z-10">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-2">
+            <div>
+              <h3 class="text-xl font-semibold text-white">Warehouse Assistant</h3>
+              <p class="text-blue-400 text-sm font-medium">Innovative Financial Technologies DBA Amarillo Wireless</p>
+            </div>
+            <span class="text-xs font-medium text-neutral-500 shrink-0 px-3 py-1 rounded-full" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);">May 2023 — Present</span>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400 leading-relaxed">
+            <li class="flex items-start gap-3"><span class="text-blue-500 mt-1 shrink-0">▸</span>Awarded <strong class="text-white">2025 Employee of the Year</strong> and recognized as Employee of the Month 4 times for sustained innovation and measurable operational impact</li>
+            <li class="flex items-start gap-3"><span class="text-blue-500 mt-1 shrink-0">▸</span>Oversaw inventory accuracy for <strong class="text-white">$500K–$1M in assets</strong> across 100–1,000+ SKUs, supporting 5–10 field technicians</li>
+            <li class="flex items-start gap-3"><span class="text-blue-500 mt-1 shrink-0">▸</span>Engineered a <strong class="text-white">730%+ improvement</strong> in item-to-technician workflow efficiency, reducing turnaround from 2–4 hours to 15–45 minutes</li>
+            <li class="flex items-start gap-3"><span class="text-blue-500 mt-1 shrink-0">▸</span>Built custom inventory tracking system (Excel → AppSheet → Google AI App Creator), processing 10–100+ transactions/day with <strong class="text-white">30–50% reduction</strong> in lookup/entry time</li>
+            <li class="flex items-start gap-3"><span class="text-blue-500 mt-1 shrink-0">▸</span>Reduced inventory discrepancies from daily to <strong class="text-white">near-zero</strong>; eliminated <strong class="text-white">99%+ of consumable stockouts</strong></li>
+            <li class="flex items-start gap-3"><span class="text-blue-500 mt-1 shrink-0">▸</span>Contributed to company-wide WMS implementation and influenced organizational upgrade through demonstrated ROI</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 2 -->
+      <div class="exp-card reveal from-right" style="transition-delay:0.15s;">
+        <div class="relative z-10">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-2">
+            <div>
+              <h3 class="text-xl font-semibold text-white">Inventory Clerk</h3>
+              <p class="text-blue-400 text-sm font-medium">Dyna Ten Corporation | Amarillo, TX</p>
+            </div>
+            <span class="text-xs font-medium text-neutral-500 shrink-0 px-3 py-1 rounded-full" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);">Oct 2020 — May 2023</span>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400 leading-relaxed">
+            <li class="flex items-start gap-3"><span class="text-purple-500 mt-1 shrink-0">▸</span>Reduced item search time from <strong class="text-white">60+ minutes to under 5 minutes</strong> by completely redesigning the inventory cage</li>
+            <li class="flex items-start gap-3"><span class="text-purple-500 mt-1 shrink-0">▸</span>Conducted high-accuracy audits across 1,000–5,000 item catalog at Bell Helicopter facility</li>
+            <li class="flex items-start gap-3"><span class="text-purple-500 mt-1 shrink-0">▸</span>Recognized by Bell Helicopter's head of quality control for <strong class="text-white">exceptional performance</strong> and attention to detail</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 3 -->
+      <div class="exp-card reveal from-left" style="transition-delay:0.2s;">
+        <div class="relative z-10">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-2">
+            <div>
+              <h3 class="text-xl font-semibold text-white">Treatment Plant Operator</h3>
+              <p class="text-blue-400 text-sm font-medium">City of Amarillo | Amarillo, TX</p>
+            </div>
+            <span class="text-xs font-medium text-neutral-500 shrink-0 px-3 py-1 rounded-full" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);">Oct 2019 — Oct 2020</span>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400 leading-relaxed">
+            <li class="flex items-start gap-3"><span class="text-green-500 mt-1 shrink-0">▸</span>Earned <strong class="text-white">D Operator License in record time</strong>, surpassing pace of all previous position holders</li>
+            <li class="flex items-start gap-3"><span class="text-green-500 mt-1 shrink-0">▸</span>Monitored and analyzed water quality data (pH, turbidity, chlorine residual) for regulatory compliance</li>
+            <li class="flex items-start gap-3"><span class="text-green-500 mt-1 shrink-0">▸</span>Performed lab testing and identified abnormalities using data-driven analysis</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Job 4 -->
+      <div class="exp-card reveal from-right" style="transition-delay:0.25s;">
+        <div class="relative z-10">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4 gap-2">
+            <div>
+              <h3 class="text-xl font-semibold text-white">Progressive Warehouse Roles</h3>
+              <p class="text-blue-400 text-sm font-medium">Affiliated Foods Inc. | Amarillo, TX</p>
+            </div>
+            <span class="text-xs font-medium text-neutral-500 shrink-0 px-3 py-1 rounded-full" style="background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);">June 2016 — June 2019</span>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400 leading-relaxed">
+            <li class="flex items-start gap-3"><span class="text-amber-500 mt-1 shrink-0">▸</span>Progressed through 3 roles — <strong class="text-white">Order Picker → QC Inspector → Inventory Clerk</strong> — two merit-based promotions in under 3 years</li>
+            <li class="flex items-start gap-3"><span class="text-amber-500 mt-1 shrink-0">▸</span>Exceeded order fulfillment targets by <strong class="text-white">15%</strong>; promoted to QC Inspector for exceptional performance</li>
+            <li class="flex items-start gap-3"><span class="text-amber-500 mt-1 shrink-0">▸</span>Applied root cause analysis to reduce recurring discrepancies and monitored perishable rotation to minimize waste</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ MARQUEE BANNER 2 ════════ -->
+<div class="relative overflow-hidden" style="padding:48px 0;background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(59,130,246,0.08));">
+  <div class="marquee-track reverse" style="margin:0 -40px;">
+    <span class="flex items-center gap-8 px-4 text-sm font-semibold uppercase tracking-widest text-purple-400/60 whitespace-nowrap">
+      <span>📦 LeanStock Pro</span><span>•</span>
+      <span>⚡ Real-Time Sync</span><span>•</span>
+      <span>🔐 Role-Based Access</span><span>•</span>
+      <span>📋 Audit Logging</span><span>•</span>
+      <span>⚛️ React</span><span>•</span>
+      <span>🟢 Node.js</span><span>•</span>
+      <span>🐘 PostgreSQL</span><span>•</span>
+      <span>🤖 AI-Assisted Dev</span><span>•</span>
+      <span>🎯 FIFO / LIFO</span><span>•</span>
+      <span>📉 Demand Forecasting</span><span>•</span>
+    </span>
+    <span class="flex items-center gap-8 px-4 text-sm font-semibold uppercase tracking-widest text-purple-400/60 whitespace-nowrap">
+      <span>📦 LeanStock Pro</span><span>•</span>
+      <span>⚡ Real-Time Sync</span><span>•</span>
+      <span>🔐 Role-Based Access</span><span>•</span>
+      <span>📋 Audit Logging</span><span>•</span>
+      <span>⚛️ React</span><span>•</span>
+      <span>🟢 Node.js</span><span>•</span>
+      <span>🐘 PostgreSQL</span><span>•</span>
+      <span>🤖 AI-Assisted Dev</span><span>•</span>
+      <span>🎯 FIFO / LIFO</span><span>•</span>
+      <span>📉 Demand Forecasting</span><span>•</span>
+    </span>
+  </div>
+</div>
+
+<!-- ════════ SKILLS ════════ -->
+<section id="skills" class="relative py-28 md:py-36">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="reveal from-left mb-16">
+      <span class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4 block">Skills & Tools</span>
+      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">My toolkit<br><span class="text-neutral-500">keeps expanding.</span></h2>
+    </div>
+
+    <div class="flex flex-wrap gap-3 reveal from-bottom" style="transition-delay:0.2s;">
+      <span class="skill-pill">Python</span>
+      <span class="skill-pill">SQL</span>
+      <span class="skill-pill">PostgreSQL</span>
+      <span class="skill-pill">React</span>
+      <span class="skill-pill">Node.js</span>
+      <span class="skill-pill">JavaScript</span>
+      <span class="skill-pill">Lean Six Sigma</span>
+      <span class="skill-pill">Root Cause Analysis</span>
+      <span class="skill-pill">Warehouse Management</span>
+      <span class="skill-pill">Inventory Control</span>
+      <span class="skill-pill">Demand Forecasting</span>
+      <span class="skill-pill">Cycle Counting</span>
+      <span class="skill-pill">FIFO / LIFO</span>
+      <span class="skill-pill">Process Optimization</span>
+      <span class="skill-pill">Microsoft Excel</span>
+      <span class="skill-pill">Google Suite</span>
+      <span class="skill-pill">Data Visualization</span>
+      <span class="skill-pill">Statistical Modeling</span>
+      <span class="skill-pill">Hypothesis Testing</span>
+      <span class="skill-pill">Machine Learning</span>
+      <span class="skill-pill">SAS</span>
+      <span class="skill-pill">Google Analytics</span>
+      <span class="skill-pill">CRM Systems</span>
+      <span class="skill-pill">SOP Development</span>
+      <span class="skill-pill">Cross-Functional Collaboration</span>
+      <span class="skill-pill">Supply Chain Management</span>
+      <span class="skill-pill">Quality Management</span>
+      <span class="skill-pill">Audit & Compliance</span>
+      <span class="skill-pill">Forklift Operations</span>
+      <span class="skill-pill">Team Leadership</span>
+      <span class="skill-pill">Data-Driven Decision Making</span>
+      <span class="skill-pill">Predictive Modeling</span>
+      <span class="skill-pill">AppSheet</span>
+      <span class="skill-pill">WMS Implementation</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ LEANSTOCK PRO PROJECT ════════ -->
+<section class="relative py-28 md:py-36 overflow-hidden" style="background:linear-gradient(180deg,#050505,rgba(23,23,23,0.4),#050505);">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full" style="background:rgba(124,58,237,0.06);filter:blur(120px);"></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="reveal from-left">
+        <span class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-4 block">Featured Project</span>
+        <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight mb-6">LeanStock<br><span class="text-transparent bg-clip-text" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);">Pro</span></h2>
+        <p class="text-neutral-400 text-lg leading-relaxed mb-6">
+          A full-stack inventory management system built with React, Node.js, and PostgreSQL. Features real-time data sync, role-based access control, and comprehensive audit logging — engineered using AI-assisted development tools.
+        </p>
+        <div class="flex flex-wrap gap-2 mb-8">
+          <span class="px-3 py-1 rounded-full text-xs font-medium" style="background:rgba(59,130,246,0.15);color:#93c5fd;">React</span>
+          <span class="px-3 py-1 rounded-full text-xs font-medium" style="background:rgba(34,197,94,0.15);color:#86efac;">Node.js</span>
+          <span class="px-3 py-1 rounded-full text-xs font-medium" style="background:rgba(168,85,247,0.15);color:#d8b4fe;">PostgreSQL</span>
+          <span class="px-3 py-1 rounded-full text-xs font-medium" style="background:rgba(251,191,36,0.15);color:#fcd34d;">AI-Assisted</span>
+        </div>
+        <a href="#contact" class="btn-slide fun">
+          Ask Me About It <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="reveal from-right" style="transition-delay:0.2s;">
+        <div class="wobble rounded-3xl overflow-hidden border border-white/5" style="box-shadow:0 0 60px rgba(59,130,246,0.1);">
+          <img src="https://picsum.photos/seed/leanstock-dashboard/800/500.jpg" alt="LeanStock Pro Dashboard" class="w-full object-cover opacity-70" style="filter:grayscale(40%) contrast(1.1);">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CERTIFICATIONS ════════ -->
+<section id="certs" class="relative py-28 md:py-36">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="reveal from-right mb-16 text-right">
+      <span class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4 block">Certifications & Education</span>
+      <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight">Always<br><span class="text-neutral-500">learning.</span></h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Certs -->
+      <div class="cert-card reveal from-left" style="transition-delay:0.05s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.15);">
+            <i data-lucide="shield-check" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">Six Sigma Yellow Belt</h4>
+            <p class="text-xs text-neutral-500">Score: 95</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">Course by Robert Chapman</p>
+      </div>
+
+      <div class="cert-card reveal from-left" style="transition-delay:0.1s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.15);">
+            <i data-lucide="shield" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">Six Sigma White Belt</h4>
+            <p class="text-xs text-neutral-500">Score: 84</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">Course by Robert Chapman</p>
+      </div>
+
+      <div class="cert-card reveal from-left" style="transition-delay:0.15s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(168,85,247,0.15);">
+            <i data-lucide="refresh-cw" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">Kaizen — Continuous Improvement</h4>
+            <p class="text-xs text-neutral-500">Score: 80</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">Course by S. M. Waqas Imam</p>
+      </div>
+
+      <div class="cert-card reveal from-left" style="transition-delay:0.2s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(34,197,94,0.15);">
+            <i data-lucide="file-check" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">Inventory & Quality Management</h4>
+            <p class="text-xs text-neutral-500">Score: 98</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">Saylor Academy</p>
+      </div>
+
+      <div class="cert-card reveal from-left" style="transition-delay:0.25s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(251,191,36,0.15);">
+            <i data-lucide="award" class="w-5 h-5 text-amber-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">ISO 9001:2015 — QMS</h4>
+            <p class="text-xs text-neutral-500">Score: 92</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">Course by S.M. Waqas Imam</p>
+      </div>
+
+      <div class="cert-card reveal from-left" style="transition-delay:0.3s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.15);">
+            <i data-lucide="code-2" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">Python AI Developer</h4>
+            <p class="text-xs text-neutral-500">Nov 2024 — Present</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">LLMs, OOP, APIs, Script Development</p>
+      </div>
+
+      <div class="cert-card reveal from-left" style="transition-delay:0.35s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(59,130,246,0.15);">
+            <i data-lucide="terminal" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">Python & SQL</h4>
+            <p class="text-xs text-neutral-500">Oct 2024 — Present</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">Core programming & relational database management</p>
+      </div>
+
+      <div class="cert-card reveal from-left" style="transition-delay:0.4s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(239,68,68,0.15);">
+            <i data-lucide="network" class="w-5 h-5 text-red-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">CCNA & CCNA CyberOps</h4>
+            <p class="text-xs text-neutral-500">In Progress</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">Currently pursuing</p>
+      </div>
+
+      <div class="cert-card reveal from-left" style="transition-delay:0.45s;">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(34,197,94,0.15);">
+            <i data-lucide="truck" class="w-5 h-5 text-green-400"></i>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-white">Supply Chain & Capacity Planning</h4>
+            <p class="text-xs text-neutral-500">Score: 84</p>
+          </div>
+        </div>
+        <p class="text-xs text-neutral-500">Saylor Academy</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ COMMUNITY ════════ -->
+<section class="relative py-20" style="background:rgba(23,23,23,0.2);">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="reveal from-bottom mb-12">
+      <span class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4 block">Community</span>
+      <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">Beyond the <span class="text-neutral-500">warehouse.</span></h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="exp-card reveal from-left" style="transition-delay:0.1s;">
+        <div class="relative z-10">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(251,191,36,0.15);">
+              <i data-lucide="tent" class="w-5 h-5 text-amber-400"></i>
+            </div>
+            <h4 class="text-lg font-semibold text-white">Scouts of America</h4>
+          </div>
+          <p class="text-sm text-blue-400 font-medium mb-3">Treasurer, Pack & Troop 702 — 2024 to Present</p>
+          <p class="text-sm text-neutral-400 leading-relaxed">Manage budgets, financial reporting, fundraising oversight, and annual planning for both Pack and Troop. Counsel Scouts on financial accountability.</p>
+        </div>
+      </div>
+      <div class="exp-card reveal from-right" style="transition-delay:0.15s;">
+        <div class="relative z-10">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(34,197,94,0.15);">
+              <i data-lucide="heart-handshake" class="w-5 h-5 text-green-400"></i>
+            </div>
+            <h4 class="text-lg font-semibold text-white">Living Water Family Church</h4>
+          </div>
+          <p class="text-sm text-blue-400 font-medium mb-3">Team Leader (Landscaping & Outreach) — 2019 to Present</p>
+          <p class="text-sm text-neutral-400 leading-relaxed">Lead and coordinate teams, manage operational schedules, and strengthen community engagement through consistent communication and organization.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CONTACT ════════ -->
+<section id="contact" class="relative py-28 md:py-36 overflow-hidden">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full" style="background:rgba(29,78,216,0.06);filter:blur(120px);"></div>
+
+  <div class="max-w-5xl mx-auto px-6 relative z-10">
+    <div class="text-center reveal from-bottom mb-16">
+      <span class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4 block">Get In Touch</span>
+      <h2 class="text-4xl md:text-6xl font-semibold tracking-tight leading-tight mb-6">Let's build<br><span style="background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">something great.</span></h2>
+      <p class="text-neutral-400 text-lg max-w-xl mx-auto">Whether you need operational transformation, inventory system design, or a technically-minded problem solver — I'm ready.</p>
+    </div>
+
+    <!-- Contact form -->
+    <form id="contact-form" class="max-w-2xl mx-auto reveal from-bottom" style="transition-delay:0.2s;">
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="text-xs font-medium text-neutral-400 mb-2 block">Name</label>
+          <input type="text" required placeholder="Your name" class="w-full px-5 py-3.5 rounded-2xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500/50 transition-colors placeholder:text-neutral-600">
+        </div>
+        <div>
+          <label class="text-xs font-medium text-neutral-400 mb-2 block">Email</label>
+          <input type="email" required placeholder="you@example.com" class="w-full px-5 py-3.5 rounded-2xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500/50 transition-colors placeholder:text-neutral-600">
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="text-xs font-medium text-neutral-400 mb-2 block">Message</label>
+        <textarea required rows="5" placeholder="Tell me about your project or opportunity..." class="w-full px-5 py-3.5 rounded-2xl bg-white/[0.04] border border-white/10 text-white text-sm focus:outline-none focus:border-blue-500/50 transition-colors placeholder:text-neutral-600 resize-none"></textarea>
+      </div>
+      <div class="flex flex-wrap gap-4 items-center justify-between">
+        <button type="submit" class="btn-slide primary">
+          Send Message <span class="arrow">→</span>
+        </button>
+        <div class="flex items-center gap-4">
+          <a href="mailto:cvaldezoperations@gmail.com" class="text-sm text-neutral-400 hover:text-blue-400 transition-colors flex items-center gap-2">
+            <i data-lucide="mail" class="w-4 h-4"></i> cvaldezoperations@gmail.com
+          </a>
+        </div>
+      </div>
+    </form>
+
+    <!-- Quick contact cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 reveal from-bottom" style="transition-delay:0.3s;">
+      <a href="mailto:cvaldezoperations@gmail.com" class="stat-box !text-left group cursor-pointer">
+        <i data-lucide="mail" class="w-6 h-6 text-blue-400 mb-3 group-hover:translate-x-1 transition-transform"></i>
+        <h4 class="text-sm font-semibold text-white mb-1">Email</h4>
+        <p class="text-xs text-neutral-500 break-all">cvaldezoperations@gmail.com</p>
+      </a>
+      <a href="tel:+18062061304" class="stat-box !text-left group cursor-pointer">
+        <i data-lucide="phone" class="w-6 h-6 text-purple-400 mb-3 group-hover:translate-x-1 transition-transform"></i>
+        <h4 class="text-sm font-semibold text-white mb-1">Phone</h4>
+        <p class="text-xs text-neutral-500">+1 806 206 1304</p>
+      </a>
+      <div class="stat-box !text-left">
+        <i data-lucide="map-pin" class="w-6 h-6 text-green-400 mb-3"></i>
+        <h4 class="text-sm font-semibold text-white mb-1">Location</h4>
+        <p class="text-xs text-neutral-500">Amarillo, TX 79107</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="py-12 border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-neutral-600">© 2025 Carlos Valdez. Built with determination and AI.</p>
+    <div class="flex items-center gap-6">
+      <a href="#hero" class="text-sm text-neutral-500 hover:text-blue-400 transition-colors">↑ Back to top</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════ JAVASCRIPT ════════ -->
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // ── SCROLL REVEAL ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ── COUNTER ANIMATION ──
+  const counters = document.querySelectorAll('[data-count]');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.dataset.animated) {
+        entry.target.dataset.animated = 'true';
+        const target = parseInt(entry.target.dataset.count);
+        const duration = 2000;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          entry.target.textContent = Math.round(target * eased);
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
+
+  // ── MOBILE MENU ──
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    });
+  });
+
+  // ── CONTACT FORM ──
+  const form = document.getElementById('contact-form');
+  const toast = document.getElementById('toast');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    toast.classList.add('show');
+    form.reset();
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  });
+
+  // ── NAV ACTIVE STATE ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const top = section.offsetTop - 200;
+      if (scrollY >= top) current = section.id;
+    });
+    navLinks.forEach(link => {
+      link.style.color = '';
+      if (link.getAttribute('href') === `#${current}`) {
+        link.style.color = '#60a5fa';
+      }
+    });
+  });
+</script>
+</body>
+</html>
